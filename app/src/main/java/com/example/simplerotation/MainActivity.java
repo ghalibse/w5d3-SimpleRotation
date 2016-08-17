@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String SUM_KEY_BUNDLE = "mySum";
     private TextView mTextView;
     private EditText mEditText;
+
+    private int mSum;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +36,25 @@ public class MainActivity extends AppCompatActivity {
 
         int val2 = Integer.parseInt(cont);
 
-        mTextView.setText(String.valueOf(val1 + val2));
+        mSum = val1 + val2;
 
+        mTextView.setText(String.valueOf(mSum));
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt(SUM_KEY_BUNDLE, mSum);
+        super.onSaveInstanceState(outState);
+
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        mSum = savedInstanceState.getInt(SUM_KEY_BUNDLE, 0);
+        mTextView.setText(String.valueOf(mSum));
     }
 }
